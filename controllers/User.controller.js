@@ -40,12 +40,12 @@ module.exports.userController = {
           error: "Недействительное имя пользователя",
         })
       }
-      const valid = await bcript.compare(password, candidate.password)
+      const valid = await bcrypt.compare(password, candidate.password)
 
       if (!valid) {
         return res
           .status(401)
-          .json({ error: "Недейтвительный пароль пользователя" })
+          .json({ error: "Недействительный пароль пользователя" })
       }
 
       const payload = {
