@@ -1,6 +1,6 @@
 const Category = require("../models/Category.model")
 
-module.exports.commentController = {
+module.exports.categoryController = {
   getCategory: async (req, res) => {
     try {
       const category = await Category.find()

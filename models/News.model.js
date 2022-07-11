@@ -12,11 +12,6 @@ const newsSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
   },
-  comment: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "Comment",
-    default: 0,
-  },
   like: {
     type: Number,
     default: 0,

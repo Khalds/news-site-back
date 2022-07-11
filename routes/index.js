@@ -1,1 +1,0 @@
-const cors = require("cors")

@@ -11,19 +11,29 @@ module.exports.newsController = {
     }
   },
 
+  getNewsById: async (req, res) => {
+    try {
+      const news = await News.findById(req.params.id)
+      res.json(news)
+    } catch (e) {
+      return res.status(401).json({ error: "Ошибка при запросе на получение" })
+    }
+  },
+
   postNews: async (req, res) => {
     try {
       const news = await News.create({
         img: req.body.img,
         title: req.body.title,
         text: req.body.text,
-        category: req.category.id,
-        author: req.author.id,
-        comment: req.comment.id,
+        category: req.body.category,
+        author: req.body.author,
       })
       res.json(news)
     } catch (e) {
-      return res.status(401).json({ error: "Ошибка при запросе на сервер" })
+      return res
+        .status(401)
+        .json({ error: "Ошибка при запросе на сервер" + e.message })
     }
   },
 
