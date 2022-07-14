@@ -1,9 +1,20 @@
 const Comment = require("../models/Comment.model")
 
 module.exports.commentController = {
+  getComments: async (req, res) => {
+    try {
+      const comment = await Comment.find().populate("user")
+      res.json(comment)
+    } catch (e) {
+      return res.status(401).json({ error: "Ошибка при запросе на получение" })
+    }
+  },
+
   getCommentById: async (req, res) => {
     try {
-      const comment = await Comment.findById(req.params.id)
+      const comment = await Comment.find({ news: req.params.id }).populate(
+        "user"
+      )
       res.json(comment)
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на получение" })
