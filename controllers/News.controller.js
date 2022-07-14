@@ -3,7 +3,7 @@ const News = require("../models/News.model")
 module.exports.newsController = {
   getNews: async (req, res) => {
     try {
-      const allNews = await News.find()
+      const allNews = await News.find().populate("author")
 
       res.json(allNews)
     } catch (e) {
@@ -13,7 +13,7 @@ module.exports.newsController = {
 
   getNewsById: async (req, res) => {
     try {
-      const news = await News.findById(req.params.id)
+      const news = await News.findById(req.params.id).populate("author")
       res.json(news)
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на получение" })
