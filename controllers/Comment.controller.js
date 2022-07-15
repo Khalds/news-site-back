@@ -12,9 +12,7 @@ module.exports.commentController = {
 
   getCommentById: async (req, res) => {
     try {
-      const comment = await Comment.find({ news: req.params.id }).populate(
-        "user"
-      )
+      const comment = await Comment.find({ news: req.params.id })
       res.json(comment)
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на получение" })

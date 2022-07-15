@@ -12,10 +12,12 @@ const newsSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
   },
-  like: {
-    type: Number,
-    default: 0,
-  },
+  like: [
+    {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+    },
+  ],
 })
 
 const News = mongoose.model("News", newsSchema)
