@@ -3,7 +3,7 @@ const Comment = require("../models/Comment.model")
 module.exports.commentController = {
   getComments: async (req, res) => {
     try {
-      const comment = await Comment.find().populate("user")
+      const comment = await Comment.find()
       res.json(comment)
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на получение" })
@@ -29,9 +29,18 @@ module.exports.commentController = {
   },
 
   removeCommentById: async (req, res) => {
+    const { id } = req.params
+
     try {
-      const comment = await Comment.findByIdAndRemove(req.params.id)
-      res.json(comment)
+      const comment = await Comment.findById(id)
+
+      if (comment.user.toString() === req.user.id) {
+        await comment.remove()
+
+        return res.json("Comment was deleted")
+      }
+
+      return res.status(401).json({ error: "Нет прав на удаление!" })
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на удаление" })
     }

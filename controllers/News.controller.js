@@ -46,13 +46,36 @@ module.exports.newsController = {
     }
   },
 
-  patchNewsById: async (req, res) => {
+  patchNewsLikeById: async (req, res) => {
     try {
-      const news = await News.findByIdAndUpdate(req.params.id, {
-        title: req.body.title,
-        text: req.body.text,
-        category: req.category.id,
-      })
+      const news = await News.findByIdAndUpdate(
+        req.params.id,
+        {
+          $push: {
+            like: req.body.like,
+          },
+        },
+        { new: true }
+      )
+      console.log(news)
+      res.json(news)
+    } catch (e) {
+      return res.status(401).json({ error: "Ошибка при запросе на изменение" })
+    }
+  },
+
+  patchNewsDisLikeById: async (req, res) => {
+    try {
+      const news = await News.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: {
+            like: req.body.like,
+          },
+        },
+        { new: true }
+      )
+      console.log(news)
       res.json(news)
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на изменение" })

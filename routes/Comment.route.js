@@ -8,7 +8,15 @@ const router = Router()
 router.get("/comments", commentController.getComments)
 router.get("/comments/:id", commentController.getCommentById)
 router.post("/comments/:id", authMiddleware, commentController.postComment)
-router.delete("/comments/:id", commentController.removeCommentById)
-router.patch("/comments/:id", commentController.patchCommentById)
+router.delete(
+  "/comments/:id",
+  authMiddleware,
+  commentController.removeCommentById
+)
+router.patch(
+  "/comments/:id",
+  authMiddleware,
+  commentController.patchCommentById
+)
 
 module.exports = router
