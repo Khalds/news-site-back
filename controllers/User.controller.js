@@ -61,4 +61,32 @@ module.exports.userController = {
       res.json({ error: e.message })
     }
   },
+
+  removeUserById: async (req, res) => {
+    const { id } = req.params
+
+    try {
+      const user = await User.findByIdAndRemove(id)
+
+      res.json(user)
+    } catch (e) {
+      return res.status(401).json({ error: "Ошибка при запросе на удаление" })
+    }
+  },
+
+  patchUserAdminById: async (req, res) => {
+    try {
+      const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          role: req.body.role,
+        },
+        { new: true }
+      )
+      console.log(user)
+      res.json(user)
+    } catch (e) {
+      return res.status(401).json({ error: "Ошибка при запросе на изменение" })
+    }
+  },
 }
