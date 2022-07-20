@@ -22,25 +22,32 @@ module.exports.newsController = {
 
   postNews: async (req, res) => {
     try {
+      const { title, text, category, author } = req.body
+
       const news = await News.create({
-        img: req.body.img,
-        title: req.body.title,
-        text: req.body.text,
-        category: req.body.category,
-        author: req.body.author,
+        images: req.file.path,
+        title,
+        text,
+        category,
+        author,
       })
       res.json(news)
     } catch (e) {
       return res
         .status(401)
-        .json({ error: "Ошибка при запросе на сервер" + e.message })
+        .json({ error: "Ошибка при запросе на сервер " + e.message })
     }
   },
 
   removeNewsById: async (req, res) => {
+    const { id } = req.params
+
     try {
-      const news = await News.findByIdAndRemove(req.params.id)
-      res.json(news)
+      const news = await News.findById(id)
+
+      await news.remove()
+
+      return res.json("News was deleted")
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на удаление" })
     }
@@ -57,7 +64,6 @@ module.exports.newsController = {
         },
         { new: true }
       )
-      console.log(news)
       res.json(news)
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на изменение" })
@@ -75,7 +81,6 @@ module.exports.newsController = {
         },
         { new: true }
       )
-      console.log(news)
       res.json(news)
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на изменение" })

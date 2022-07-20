@@ -1,12 +1,16 @@
-const express = require("express")
 const cors = require("cors")
+const express = require("express")
 const mongoose = require("mongoose")
+const app = express()
 require("dotenv").config()
 
-const app = express()
+const path = require("path")
 
 app.use(express.json())
 app.use(cors())
+
+app.use("/images", express.static(path.resolve(__dirname, "images")))
+
 
 app.use(require("./routes/User.route"))
 app.use(require("./routes/Category.route"))

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const newsSchema = mongoose.Schema({
-  img: String,
+  images: String,
   title: String,
   text: String,
   category: {
