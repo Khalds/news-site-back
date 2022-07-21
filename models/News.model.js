@@ -4,6 +4,12 @@ const newsSchema = mongoose.Schema({
   images: String,
   title: String,
   text: String,
+
+  approved: {
+    type: Boolean,
+    default: false,
+  },
+
   category: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "Category",

@@ -28,6 +28,20 @@ module.exports.categoryController = {
     }
   },
 
+  removeCommentById: async (req, res) => {
+    const { id } = req.params
+
+    try {
+      const category = await Category.findById(id)
+
+      await category.remove()
+
+      return res.json("Comment was deleted")
+    } catch (e) {
+      return res.status(401).json({ error: "Ошибка при запросе на удаление" })
+    }
+  },
+
   patchCategoryById: async (req, res) => {
     try {
       const category = await Category.findByIdAndUpdate(req.params.id, {
