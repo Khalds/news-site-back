@@ -16,5 +16,10 @@ router.patch(
   authMiddleware,
   newsController.patchNewsDisLikeById
 )
+router.patch(
+  "/news/:id/approved",
+  authMiddleware,
+  newsController.patchNewsApproved
+)
 
 module.exports = router

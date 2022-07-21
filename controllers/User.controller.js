@@ -87,7 +87,6 @@ module.exports.userController = {
         },
         { new: true }
       )
-      console.log(user)
       res.json(user)
     } catch (e) {
       return res.status(401).json({ error: "Ошибка при запросе на изменение" })
